@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Signup.css";
 
-const API = process.env.REACT_APP_API_URL || "http://localhost:3002";
+const API = process.env.REACT_APP_API_URL || "http://localhost:3003";
 
 function Signup() {
   const [formData, setFormData] = useState({
