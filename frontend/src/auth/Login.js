@@ -172,7 +172,7 @@ function Login() {
 
     setLoading(true);
     try {
-      const API = process.env.REACT_APP_API_URL || "http://localhost:3002";
+      const API = process.env.REACT_APP_API_URL || "http://localhost:3003";
       const res = await axios.post(`${API}/auth/login`, { username, password });
 
       const { accessToken, refreshToken, role, name, userId } = res.data;

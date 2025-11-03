@@ -1,21 +1,3 @@
-// // src/dashboard/AdminAnalytics.js
-// import React from "react";
-
-// const AdminAnalytics = () => {
-//   return (
-//     <div className="admin-analytics">
-//       <h3>Analytics Dashboard</h3>
-//       <p>Here you can visualize trading volume, top users, and market trends.</p>
-//     </div>
-//   );
-// };
-
-// export default AdminAnalytics;
-
-
-
-
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Bar, Line } from "react-chartjs-2";
@@ -47,12 +29,13 @@ const AdminAnalytics = () => {
   const [symbol, setSymbol] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const API = import.meta.env?.VITE_API_URL || "http://localhost:3002";
+
+  const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:3003";
   const token = localStorage.getItem("token");
 
   const fetchAnalytics = async () => {
     try {
-      const res = await axios.get(`${API}/admin/analytics`, {
+      const res = await axios.get(`${API_BASE}/admin/analytics`, {
         headers: { Authorization: `Bearer ${token}` },
         params: {
           symbol,

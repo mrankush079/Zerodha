@@ -246,7 +246,8 @@ export const GeneralContextProvider = ({ children }) => {
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   const userId = localStorage.getItem("userId");
-  const API_BASE = import.meta.env?.VITE_API_URL || "http://localhost:3002";
+  const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:3003";
+
 
   const mergeTrade = (list, trade) => {
     const index = list.findIndex((t) => t.symbol === trade.symbol);

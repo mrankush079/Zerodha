@@ -138,7 +138,8 @@ const Orders = () => {
   const [filters, setFilters] = useState({ symbol: "", mode: "", date: "" });
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const API_BASE = import.meta.env?.VITE_API_URL || "http://localhost:3002";
+     const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:3003";
+
 
   useEffect(() => {
     const fetchOrders = async () => {
