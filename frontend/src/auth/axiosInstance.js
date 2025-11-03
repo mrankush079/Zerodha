@@ -63,7 +63,14 @@
 
 import axios from "axios";
 
-const API = import.meta.env?.VITE_API_URL || "http://localhost:3002";
+import { BASE_URL } from "../config";
+
+const API = process.env.REACT_APP_API_URL || "http://localhost:3002";
+
+
+
+
+
 
 const instance = axios.create({ baseURL: API });
 
@@ -87,6 +94,8 @@ instance.interceptors.response.use(
       }
     }
     return Promise.reject(err);
+    console.log("API is running at:", BASE_URL);
+
   }
 );
 
