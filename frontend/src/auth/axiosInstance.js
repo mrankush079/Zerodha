@@ -63,8 +63,6 @@
 
 import axios from "axios";
 
-import { BASE_URL } from "../config";
-
 const API = process.env.REACT_APP_API_URL || "http://localhost:3003";
 
 
