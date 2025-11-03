@@ -158,10 +158,6 @@
 
 
 
-
-
-
-
 require("dotenv").config();
 
 const express = require("express");
@@ -172,11 +168,11 @@ const morgan = require("morgan");
 
 const app = express();
 const PORT = process.env.PORT || 3002;
-const uri = process.env.MONGO_URL;
+const uri = process.env.MONGO_URI; // ✅ Corrected variable name
 
 // ✅ Middleware
 app.use(cors({
-  origin: "https://your-frontend.vercel.app", // Replace with actual frontend URL
+  origin: "https://your-frontend.vercel.app", // 🔁 Replace with actual frontend URL
   credentials: true
 }));
 app.use(express.json());
@@ -210,10 +206,10 @@ app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
 
-// ✅ Connect to MongoDB
+// ✅ Connect to MongoDB (no deprecated options)
 mongoose.connect(uri)
-  .then(() => console.log("DB connected!"))
-  .catch((err) => console.error("DB connection error:", err.message));
+  .then(() => console.log("✅ MongoDB connected"))
+  .catch((err) => console.error("❌ DB connection error:", err.message));
 
 // ✅ MongoDB error listener
 mongoose.connection.on("error", (err) => {

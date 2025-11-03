@@ -1,18 +1,37 @@
+// const mongoose = require("mongoose");
+
+// const OrdersSchema = new mongoose.Schema(
+//   {
+//     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+//     name: { type: String, required: true },
+//     symbol: { type: String },
+//     qty: { type: Number, required: true },
+//     price: { type: Number, required: true },
+//     mode: { type: String, enum: ["BUY", "SELL"], required: true },
+//   },
+//   { timestamps: true }
+// );
+
+// const OrdersModel = mongoose.model("Order", OrdersSchema);
+// module.exports = OrdersModel;
+
+
+
+
+
 const mongoose = require("mongoose");
 
-const OrdersSchema = new mongoose.Schema(
-  {
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    name: { type: String, required: true },
-    symbol: { type: String },
-    qty: { type: Number, required: true },
-    price: { type: Number, required: true },
-    mode: { type: String, enum: ["BUY", "SELL"], required: true },
-  },
-  { timestamps: true }
-);
+const orderSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  symbol: { type: String, required: true },
+  quantity: { type: Number, required: true },
+  price: { type: Number, required: true },
+  orderType: { type: String, enum: ["buy", "sell"], required: true },
+  status: { type: String, enum: ["pending", "executed", "cancelled"], default: "pending" },
+  createdAt: { type: Date }, // ✅ No index here
+  updatedAt: { type: Date }
+}, { timestamps: true });
 
-const OrdersModel = mongoose.model("Order", OrdersSchema);
-module.exports = OrdersModel;
+// ❌ Removed: orderSchema.index({ createdAt: 1 });
 
-
+module.exports = mongoose.model("Order", orderSchema);
