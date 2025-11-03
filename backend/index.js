@@ -172,7 +172,7 @@ const uri = process.env.MONGO_URI; // ✅ Corrected variable name
 
 // ✅ Middleware
 app.use(cors({
-  origin: "https://your-frontend.vercel.app", // 🔁 Replace with actual frontend URL
+  origin: "https://zerodha-ten-beta.vercel.app/", // 🔁 Replace with actual frontend URL
   credentials: true
 }));
 app.use(express.json());
