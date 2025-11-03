@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Signup.css";
 
+const API = process.env.REACT_APP_API_URL || "http://localhost:3002";
+
 function Signup() {
   const [formData, setFormData] = useState({
     name: "",
@@ -29,15 +31,15 @@ function Signup() {
     }
 
     try {
-      const res = await fetch("http://localhost:3002/auth/register", {
+      const res = await fetch(`${API}/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          username: email,         // ✅ required by backend
-          password: password,      // ✅ required by backend
-          role: "user",            // ✅ optional default
-          name: name,              // ✅ optional if backend supports it
-          mobile: mobile           // ✅ optional if backend supports it
+          username: email,
+          password,
+          role: "user",
+          name,
+          mobile,
         }),
       });
 
@@ -50,8 +52,8 @@ function Signup() {
         setMessage(data.message || "Signup failed.");
       }
     } catch (err) {
+      console.error("Signup error:", err);
       setMessage("Server error. Please try again.");
-      console.error(err);
     }
   };
 
@@ -59,7 +61,9 @@ function Signup() {
     <div className="signup-wrapper">
       <div className="signup-card animated-signup">
         <h2 className="signup-title">Create Your Zerodha Account</h2>
-        <p className="signup-subtitle">Start trading and investing with powerful platforms.</p>
+        <p className="signup-subtitle">
+          Start trading and investing with powerful platforms.
+        </p>
 
         <input
           className="signup-input"
@@ -106,7 +110,10 @@ function Signup() {
 
         <div className="signup-footer">
           <p>Already have an account?</p>
-          <button className="signup-login-link" onClick={() => navigate("/login")}>
+          <button
+            className="signup-login-link"
+            onClick={() => navigate("/login")}
+          >
             Login
           </button>
         </div>
