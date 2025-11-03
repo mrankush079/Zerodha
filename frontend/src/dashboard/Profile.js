@@ -11,7 +11,7 @@ const Profile = () => {
   const [form, setForm] = useState({});
   const navigate = useNavigate();
 
-  const API = import.meta.env?.VITE_API_URL || "http://localhost:3002";
+  const API = process.env.REACT_APP_API_URL || "http://localhost:3003";
   const userId = localStorage.getItem("userId");
 
   useEffect(() => {
