@@ -162,7 +162,6 @@
 
 
 
-
 require("dotenv").config();
 
 const express = require("express");
@@ -201,6 +200,11 @@ app.use("/api/quote", require("./routes/quote"));
 app.use("/health", require("./routes/health")); // Modular health route
 app.use(require("./middleware/errorHandler"));
 
+// ✅ Root route for Render health check
+app.get("/", (req, res) => {
+  res.send("Zerodha backend is running");
+});
+
 // ✅ Start server (always bind to port for Render)
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
@@ -210,3 +214,8 @@ app.listen(PORT, () => {
 mongoose.connect(uri)
   .then(() => console.log("DB connected!"))
   .catch((err) => console.error("DB connection error:", err.message));
+
+// ✅ MongoDB error listener
+mongoose.connection.on("error", (err) => {
+  console.error("MongoDB connection error:", err.message);
+});
