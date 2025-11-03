@@ -1,0 +1,101 @@
+/* src/auth/Login.css */
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f4f6f8;
+  color: #333;
+}
+
+.login-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 20px;
+  min-height: 80vh;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.login-card h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #222;
+}
+
+.login-card input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.login-card input:focus {
+  border-color: #0077cc;
+  outline: none;
+}
+
+.login-card button {
+  width: 100%;
+  padding: 12px;
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login-card button:hover {
+  background-color: #005fa3;
+}
+
+.login-message {
+  margin-top: 10px;
+  color: red;
+  font-size: 14px;
+}
+
+/* Footer styling */
+.footer {
+  background-color: #1c1c1c;
+  color: #ccc;
+  padding: 40px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.footer-column {
+  flex: 1;
+  min-width: 180px;
+  margin-bottom: 20px;
+}
+
+.footer-column h4 {
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.footer-column a {
+  display: block;
+  color: #ccc;
+  text-decoration: none;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.footer-column a:hover {
+  color: #fff;
+}

@@ -1,0 +1,11 @@
+{
+  "QUICKHEAL": { "price": 308.55, "change": -0.15 },
+  "KPITTECH": { "price": 266.45, "change": 3.54 },
+  "MANDM": { "price": 779.8, "change": -0.01 },
+  "HUL": { "price": 512.4, "change": 1.04 },
+  "INFY": { "price": 1450.25, "change": 12.3 },
+  "TCS": { "price": 3620.10, "change": -8.5 },
+  "RELIANCE": { "price": 2480.00, "change": 5.2 },
+  "WIPRO": { "price": 420.75, "change": -3.1 },
+  "ONGC": { "price": 185.60, "change": 1.4 }
+}
