@@ -13,9 +13,9 @@ const WatchListItem = ({ stock }) => {
   useEffect(() => {
     const fetchQuote = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:3002/api/quote/${stock.name}`
-        );
+        const API = process.env.REACT_APP_API_URL || "http://localhost:3003";
+        const res = await axios.get(`${API}/api/quote/${stock.name}`);
+
         if (!res.data || res.data.price === 0) {
           setQuote({ price: "-", change: "-" });
         } else {
