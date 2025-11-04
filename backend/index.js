@@ -1,4 +1,3 @@
-
 require("dotenv").config();
 
 const express = require("express");
@@ -11,11 +10,14 @@ const app = express();
 const PORT = process.env.PORT || 3003;
 const uri = process.env.MONGO_URI || "mongodb://localhost:27017/portfolio";
 
-//  Dynamic CORS origin support
+//  Updated CORS origin support
 const allowedOrigins = [
-  "http://localhost:3000",
-  "https://zerodha-ten-beta.vercel.app",
+  "http://localhost:3000", // Local dev
+  "https://zerodha-silk.vercel.app", // ✅ Vercel domain #1
+  "https://zerodha-git-main-mrankush079s-projects.vercel.app", // ✅ Vercel domain #2
+  "https://zerodha-g17xo7rmf-mrankush079s-projects.vercel.app", // ✅ Vercel domain #3
 ];
+
 
 app.use(cors({
   origin: function (origin, callback) {
@@ -33,7 +35,7 @@ app.use(cors({
 app.use(express.json());
 app.use(morgan("dev"));
 app.use((req, res, next) => {
-  console.log(`📥 ${req.method} ${req.url}`);
+  console.log(` ${req.method} ${req.url}`);
   next();
 });
 
@@ -49,7 +51,7 @@ app.use("/admin", require("./routes/admin"));
 app.use("/newOrder", require("./routes/newOrder"));
 app.use("/api/quote", require("./routes/quote"));
 app.use("/health", require("./routes/health"));
-app.use("/user", require("./routes/user")); //  Added user route
+app.use("/user", require("./routes/user")); // ✅ Added user route
 
 //  Error handler middleware
 app.use(require("./middleware/errorHandler"));
@@ -70,9 +72,9 @@ app.listen(PORT, () => {
   console.log(` Server running on http://localhost:${PORT}`);
 });
 
-// ✅ Connect to MongoDB
+//  Connect to MongoDB
 mongoose.connect(uri)
-  .then(() => console.log("✅ MongoDB connected"))
+  .then(() => console.log(" MongoDB connected"))
   .catch((err) => console.error(" DB connection error:", err.message));
 
 mongoose.connection.on("error", (err) => {
