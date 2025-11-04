@@ -11,17 +11,21 @@ const { verifyToken, requireAdmin, requireSelf } = require("../middleware/auth")
 const JWT_SECRET = process.env.JWT_SECRET;
 const REFRESH_SECRET = process.env.REFRESH_SECRET;
 
-// ✅ Register
+//  Register
 router.post("/register", async (req, res) => {
+  console.log(" POST /auth/register", req.body);
+
   try {
     const { username, password, role, name, mobile, avatar } = req.body;
 
     if (!username || !password) {
+      console.warn("Missing username or password");
       return res.status(400).json({ message: "Missing fields" });
     }
 
     const existingUser = await UserModel.findOne({ username });
     if (existingUser) {
+      console.warn(" User already exists:", username);
       return res.status(409).json({ message: "User already exists" });
     }
 
@@ -36,22 +40,35 @@ router.post("/register", async (req, res) => {
     });
 
     await newUser.save();
+    console.log(" User registered:", username);
     res.status(201).json({ message: "User registered successfully" });
   } catch (err) {
-    console.error("Register error:", err);
+    console.error(" Register error:", err);
     res.status(500).json({ message: "Server error. Please try again." });
   }
 });
 
-// ✅ Login
+// Login
 router.post("/login", async (req, res) => {
+  console.log(" POST /auth/login", req.body);
+
   try {
     const { username, password } = req.body;
+    if (!username || !password) {
+      return res.status(400).json({ message: "Missing credentials" });
+    }
+
     const user = await UserModel.findOne({ username });
-    if (!user) return res.status(404).json({ message: "User not found" });
+    if (!user) {
+      console.warn(" User not found:", username);
+      return res.status(404).json({ message: "User not found" });
+    }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(401).json({ message: "Invalid credentials" });
+    if (!isMatch) {
+      console.warn(" Invalid credentials for:", username);
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
 
     await RefreshTokenModel.deleteMany({ userId: user._id });
 
@@ -68,6 +85,7 @@ router.post("/login", async (req, res) => {
 
     await RefreshTokenModel.create({ userId: user._id, token: refreshToken });
 
+    console.log(" Login successful:", username);
     res.json({
       accessToken,
       refreshToken,
@@ -76,13 +94,15 @@ router.post("/login", async (req, res) => {
       userId: user._id,
     });
   } catch (err) {
-    console.error("Login error:", err);
+    console.error(" Login error:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
 
-// ✅ Refresh token
+// Refresh token
 router.post("/refresh", async (req, res) => {
+  console.log(" POST /auth/refresh", req.body);
+
   try {
     const { token } = req.body;
     if (!token) return res.status(403).json({ message: "Refresh token required" });
@@ -104,30 +124,36 @@ router.post("/refresh", async (req, res) => {
       { expiresIn: "15m" }
     );
 
+    console.log("✅ Token refreshed for:", user.username);
     res.json({ accessToken });
   } catch (err) {
-    console.error("Refresh error:", err);
+    console.error(" Refresh error:", err);
     res.status(401).json({ message: "Token expired or invalid" });
   }
 });
 
-// ✅ Logout
+//  Logout
 router.post("/logout", async (req, res) => {
+  console.log(" POST /auth/logout", req.body);
+
   try {
     const { token } = req.body;
     if (!token) return res.status(400).json({ message: "Token required" });
 
     await RefreshTokenModel.deleteOne({ token });
+    console.log(" Logout successful");
     res.json({ message: "Logged out successfully" });
   } catch (err) {
-    console.error("Logout error:", err);
+    console.error(" Logout error:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
 
-// ✅ Get user profile (protected)
+// Get user profile
 router.get("/user/:userId", verifyToken, requireSelf, async (req, res) => {
   const { userId } = req.params;
+  console.log(" GET /auth/user/:userId", userId);
+
   if (!mongoose.Types.ObjectId.isValid(userId)) {
     return res.status(400).json({ message: "Invalid userId" });
   }
@@ -137,15 +163,16 @@ router.get("/user/:userId", verifyToken, requireSelf, async (req, res) => {
     if (!user) return res.status(404).json({ message: "User not found" });
     res.json(user);
   } catch (err) {
-    console.error("Profile fetch error:", err);
+    console.error(" Profile fetch error:", err);
     res.status(500).json({ message: "Failed to fetch user" });
   }
 });
 
-// ✅ Update user profile (protected)
+//  Update user profile
 router.put("/user/:userId", verifyToken, requireSelf, async (req, res) => {
   const { userId } = req.params;
   const { name, mobile, avatar } = req.body;
+  console.log("PUT /auth/user/:userId", userId, req.body);
 
   if (!mongoose.Types.ObjectId.isValid(userId)) {
     return res.status(400).json({ message: "Invalid userId" });
@@ -160,7 +187,7 @@ router.put("/user/:userId", verifyToken, requireSelf, async (req, res) => {
 
     res.json(updated);
   } catch (err) {
-    console.error("Profile update error:", err);
+    console.error(" Profile update error:", err);
     res.status(500).json({ message: "Failed to update user" });
   }
 });

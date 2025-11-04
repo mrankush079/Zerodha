@@ -37,12 +37,12 @@ const AdminOverview = () => {
 
   return (
     <div className="admin-overview">
-      {/* ✅ System Status Banner */}
+      {/*  System Status Banner */}
       <div className="status-banner">
-        ✅ All systems operational. Last sync: 2 mins ago.
+         All systems operational. Last sync: 2 mins ago.
       </div>
 
-      {/* ✅ Stats Cards */}
+      {/*  Stats Cards */}
       <div className="stats-cards">
         {statCards.map((stat, i) => (
           <div key={i} className="stat-card" style={{ borderColor: stat.color }}>
@@ -55,7 +55,7 @@ const AdminOverview = () => {
         ))}
       </div>
 
-      {/* ✅ User Growth Chart */}
+      {/*  User Growth Chart */}
       <div className="chart-section">
         <h4>User Growth (Last 6 Months)</h4>
         <ResponsiveContainer width="100%" height={250}>

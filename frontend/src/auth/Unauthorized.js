@@ -1,36 +1,27 @@
-// src/auth/Unauthorized.js
-import React from 'react';
-import { Link } from 'react-router-dom';
+
+
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Unauthorized = () => {
+  useEffect(() => {
+    toast.warn(" You are not authorized to access this page.");
+  }, []);
+
   return (
-    <div style={styles.container}>
-      <h1 style={styles.heading}>🚫 Access Denied</h1>
-      <p style={styles.message}>You do not have permission to view this page.</p>
-      <Link to="/" style={styles.link}>Go back to Home</Link>
+    <div className="unauthorized-wrapper">
+      <div className="unauthorized-card">
+        <h1 className="unauthorized-heading"> Access Denied</h1>
+        <p className="unauthorized-message">
+          You do not have permission to view this page.
+        </p>
+        <Link to="/" className="unauthorized-link">
+          ⬅ Go back to Home
+        </Link>
+      </div>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    textAlign: 'center',
-    padding: '50px',
-    fontFamily: 'Arial, sans-serif',
-  },
-  heading: {
-    fontSize: '2rem',
-    color: '#d32f2f',
-  },
-  message: {
-    fontSize: '1.2rem',
-    margin: '20px 0',
-  },
-  link: {
-    textDecoration: 'none',
-    color: '#1976d2',
-    fontWeight: 'bold',
-  },
 };
 
 export default Unauthorized;

@@ -1,6 +1,7 @@
 
+
 import React, { useEffect, useState } from "react";
-import api from "../auth/axiosInstance"; // ✅ Axios instance with interceptor
+import api from "../auth/axiosInstance";
 import { toast, ToastContainer } from "react-toastify";
 import {
   AccessTime,
@@ -14,10 +15,37 @@ const AdminLogs = () => {
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Mock log data for testing
+  const mockLogs = [
+    {
+      _id: "log1",
+      type: "LOGIN",
+      user: "ankush@admin",
+      time: new Date().toISOString(),
+      message: "User logged in successfully",
+    },
+    {
+      _id: "log2",
+      type: "TRADE",
+      user: "ankush@admin",
+      symbol: "TCS",
+      qty: 10,
+      time: new Date().toISOString(),
+      message: "Executed buy order",
+    },
+    {
+      _id: "log3",
+      type: "ERROR",
+      user: "ankush@admin",
+      time: new Date().toISOString(),
+      message: "Failed to fetch holdings",
+    },
+  ];
+
   const fetchLogs = async () => {
     try {
-      const res = await api.get("/admin/logs"); // ✅ No manual token needed
-      setLogs(res.data);
+      //  Replace API call with mock data
+      setLogs(mockLogs);
     } catch (err) {
       console.error("Log fetch error:", err.response?.data || err.message);
       toast.error("Failed to load system logs.");
@@ -44,26 +72,16 @@ const AdminLogs = () => {
   };
 
   const handleArchive = async (id) => {
-    try {
-      await api.put(`/admin/logs/${id}/archive`);
-      toast.success("Log archived");
-      fetchLogs();
-    } catch (err) {
-      console.error("Archive error:", err.response?.data || err.message);
-      toast.error("Failed to archive log.");
-    }
+    toast.success(`Log ${id} archived`);
+    // Simulate archive by filtering out the log
+    setLogs((prev) => prev.filter((log) => log._id !== id));
   };
 
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to permanently delete this log?")) return;
-    try {
-      await api.delete(`/admin/logs/${id}`);
-      toast.success("Log deleted");
-      fetchLogs();
-    } catch (err) {
-      console.error("Delete error:", err.response?.data || err.message);
-      toast.error("Failed to delete log.");
-    }
+    toast.success(`Log ${id} deleted`);
+    // Simulate delete by filtering out the log
+    setLogs((prev) => prev.filter((log) => log._id !== id));
   };
 
   return (
@@ -74,7 +92,10 @@ const AdminLogs = () => {
       {loading ? (
         <p>Loading logs...</p>
       ) : logs.length === 0 ? (
-        <p>No logs available.</p>
+        <div className="empty-logs">
+          <i className="fas fa-info-circle"></i>
+          <p>No logs available at the moment.</p>
+        </div>
       ) : (
         <ul className="log-list">
           {logs.map((log, i) => (

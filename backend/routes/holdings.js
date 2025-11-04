@@ -5,21 +5,23 @@ const mongoose = require("mongoose");
 const HoldingsModel = require("../model/HoldingsModel");
 const staticQuotes = require("../data/staticQuotes.json");
 
-// Utility: validate required fields
-const validateFields = (fields) => {
-  return fields.every((field) => field !== undefined && field !== null);
-};
+//  Utility: validate required fields
+const validateFields = (fields) => fields.every((f) => f !== undefined && f !== null);
 
-// ✅ Create or update a holding (buy/sell)
+//  Normalize type input
+const normalizeType = (type) => (type?.toLowerCase() === "sell" ? "sell" : "buy");
+
+//  Create or update a holding (buy/sell)
 router.post("/", async (req, res) => {
   const { userId, symbol, qty, price, type = "buy" } = req.body;
+  const action = normalizeType(type);
 
   if (!validateFields([userId, symbol, qty, price])) {
     return res.status(400).json({ error: "Missing required fields", status: "error" });
   }
 
   if (!mongoose.Types.ObjectId.isValid(userId)) {
-    console.error("Invalid userId:", userId);
+    console.error(" Invalid userId:", userId);
     return res.status(400).json({ error: "Invalid userId", status: "error" });
   }
 
@@ -27,7 +29,7 @@ router.post("/", async (req, res) => {
     const existing = await HoldingsModel.findOne({ userId, symbol });
 
     if (existing) {
-      if (type === "sell") {
+      if (action === "sell") {
         if (existing.qty < qty) {
           return res.status(400).json({ error: "Not enough quantity to sell", status: "error" });
         }
@@ -39,37 +41,39 @@ router.post("/", async (req, res) => {
       }
 
       await existing.save();
+      console.log(` Holdings updated for ${symbol}:`, existing);
       return res.status(200).json({
         message: "Holdings updated",
         holding: existing,
-        status: "success",
+        status: "success"
       });
     }
 
-    if (type === "sell") {
+    if (action === "sell") {
       return res.status(400).json({ error: "Cannot sell non-existent holding", status: "error" });
     }
 
     const newHolding = new HoldingsModel({ userId, symbol, qty, price });
     await newHolding.save();
+    console.log(` New holding created for ${symbol}:`, newHolding);
 
     res.status(201).json({
       message: "Holdings created",
       holding: newHolding,
-      status: "success",
+      status: "success"
     });
   } catch (err) {
-    console.error("Holdings POST error:", err.message);
+    console.error(" Holdings POST error:", err.message);
     res.status(500).json({ error: "Failed to update holdings", status: "error" });
   }
 });
 
-// ✅ Get holdings for a specific user
+//  Get holdings for a specific user
 router.get("/user/:userId", async (req, res) => {
   const { userId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(userId)) {
-    console.error("Invalid userId:", userId);
+    console.error(" Invalid userId:", userId);
     return res.status(400).json({ error: "Invalid userId", status: "error" });
   }
 
@@ -97,12 +101,12 @@ router.get("/user/:userId", async (req, res) => {
 
     res.status(200).json(enriched);
   } catch (err) {
-    console.error("User holdings fetch error:", err.message);
+    console.error(" User holdings fetch error:", err.message);
     res.status(500).json({ error: "Failed to fetch holdings", status: "error" });
   }
 });
 
-// ✅ Get all holdings (admin or demo)
+//  Get all holdings (admin or demo)
 router.get("/allHoldings", async (req, res) => {
   try {
     const holdings = await HoldingsModel.find({});
@@ -128,7 +132,7 @@ router.get("/allHoldings", async (req, res) => {
 
     res.status(200).json(enriched);
   } catch (err) {
-    console.error("All holdings fetch error:", err.message);
+    console.error(" All holdings fetch error:", err.message);
     res.status(500).json({ error: "Failed to fetch all holdings", status: "error" });
   }
 });

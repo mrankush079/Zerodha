@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const WatchlistModel = require("../model/WatchlistModel"); // ✅ Corrected path
+const WatchlistModel = require("../model/WatchlistModel"); //  Corrected path
 
-// ✅ Get watchlist for a user
+//  Get watchlist for a user
 router.get("/user/:userId", async (req, res) => {
   try {
     const watchlist = await WatchlistModel.find({ userId: req.params.userId });
@@ -13,7 +13,7 @@ router.get("/user/:userId", async (req, res) => {
   }
 });
 
-// ✅ Add to watchlist
+//  Add to watchlist
 router.post("/", async (req, res) => {
   const { userId, symbol, name, type, note = "", alertPrice = null } = req.body;
 
@@ -44,7 +44,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// ✅ Remove from watchlist
+//  Remove from watchlist
 router.delete("/:itemId", async (req, res) => {
   try {
     const item = await WatchlistModel.findByIdAndDelete(req.params.itemId);

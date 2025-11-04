@@ -5,7 +5,7 @@ const Joi = require("joi");
 const mongoose = require("mongoose");
 const OrdersModel = require("../model/OrdersModel");
 
-// ✅ Validation schema
+//  Validation schema
 const orderSchema = Joi.object({
   name: Joi.string().required(),
   symbol: Joi.string().optional(), // Optional with fallback
@@ -15,7 +15,7 @@ const orderSchema = Joi.object({
   userId: Joi.string().required()
 });
 
-// ✅ POST /orders
+//  POST /orders
 router.post("/", async (req, res) => {
   const { error } = orderSchema.validate(req.body);
   if (error) {
@@ -48,7 +48,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// ✅ GET /orders/user/:userId
+//  GET /orders/user/:userId
 router.get("/user/:userId", async (req, res) => {
   const { userId } = req.params;
 
@@ -66,7 +66,7 @@ router.get("/user/:userId", async (req, res) => {
   }
 });
 
-// ✅ GET /orders/all (Admin view)
+//  GET /orders/all (Admin view)
 router.get("/all", async (req, res) => {
   try {
     const orders = await OrdersModel.find().sort({ createdAt: -1 });

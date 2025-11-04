@@ -36,7 +36,7 @@ const WatchListActions = ({ uid, livePrice = 0, change = 0 }) => {
     }
 
     try {
-      const API = process.env.REACT_APP_API_URL || "http://localhost:3002";
+      const API = process.env.REACT_APP_API_URL || "http://localhost:3003";
       const res = await axios.post(`${API}/newOrder`, {
         userId,
         name: uid,

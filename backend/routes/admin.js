@@ -5,14 +5,14 @@ const router = express.Router();
 const { verifyToken, requireAdmin } = require("../middleware/auth");
 const UserModel = require("../model/UserModel");
 const LogModel = require("../model/LogModel");
-const TradeModel = require("../model/TradeModel"); // ✅ Required for analytics
+const TradeModel = require("../model/TradeModel"); //  Required for analytics
 
-// ✅ Admin-only dashboard access
+//  Admin-only dashboard access
 router.get("/dashboard", verifyToken, requireAdmin, (req, res) => {
   res.send("Welcome Admin. You have full access.");
 });
 
-// ✅ Get all users (no passwords)
+//  Get all users (no passwords)
 router.get("/users", verifyToken, requireAdmin, async (req, res) => {
   try {
     const users = await UserModel.find().select("-password").sort({ createdAt: -1 });
@@ -23,7 +23,7 @@ router.get("/users", verifyToken, requireAdmin, async (req, res) => {
   }
 });
 
-// ✅ Update user role
+//  Update user role
 router.put("/users/:id/role", verifyToken, requireAdmin, async (req, res) => {
   const { role } = req.body;
   try {
@@ -46,7 +46,7 @@ router.put("/users/:id/role", verifyToken, requireAdmin, async (req, res) => {
   }
 });
 
-// ✅ Toggle user active/inactive status
+//  Toggle user active/inactive status
 router.put("/users/:id/status", verifyToken, requireAdmin, async (req, res) => {
   const { active } = req.body;
   try {
@@ -69,7 +69,7 @@ router.put("/users/:id/status", verifyToken, requireAdmin, async (req, res) => {
   }
 });
 
-// ✅ View system logs with filters
+//  View system logs with filters
 router.get("/logs", verifyToken, requireAdmin, async (req, res) => {
   try {
     const { type, user, archived } = req.query;
@@ -88,7 +88,7 @@ router.get("/logs", verifyToken, requireAdmin, async (req, res) => {
   }
 });
 
-// ✅ Archive a log (soft delete)
+//  Archive a log (soft delete)
 router.put("/logs/:id/archive", verifyToken, requireAdmin, async (req, res) => {
   try {
     const updated = await LogModel.findByIdAndUpdate(
@@ -103,7 +103,7 @@ router.put("/logs/:id/archive", verifyToken, requireAdmin, async (req, res) => {
   }
 });
 
-// ✅ Delete a log permanently
+//  Delete a log permanently
 router.delete("/logs/:id", verifyToken, requireAdmin, async (req, res) => {
   try {
     await LogModel.findByIdAndDelete(req.params.id);
@@ -114,7 +114,7 @@ router.delete("/logs/:id", verifyToken, requireAdmin, async (req, res) => {
   }
 });
 
-// ✅ Analytics with filters (symbol, startDate, endDate)
+//  Analytics with filters (symbol, startDate, endDate)
 router.get("/analytics", verifyToken, requireAdmin, async (req, res) => {
   const { symbol, startDate, endDate } = req.query;
 

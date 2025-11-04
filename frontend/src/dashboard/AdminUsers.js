@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import api from "../auth/axiosInstance"; // ✅ Axios instance with interceptor
+import api from "../auth/axiosInstance"; //  Axios instance with interceptor
 import { toast, ToastContainer } from "react-toastify";
 
 const AdminUsers = () => {

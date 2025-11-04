@@ -1,12 +1,10 @@
-
 import axios from "axios";
-import { getAccessToken, getDecodedUser, logout } from "../auth/authUtils";
+import { getAccessToken, logout } from "../auth/authUtils";
 
 const API = process.env.REACT_APP_API_URL || "http://localhost:3003";
 
 const instance = axios.create({ baseURL: API });
 
-//  Attach access token to every request
 instance.interceptors.request.use((config) => {
   const token = getAccessToken();
   if (token) {
@@ -15,7 +13,6 @@ instance.interceptors.request.use((config) => {
   return config;
 });
 
-//  Handle 401 errors and refresh token
 instance.interceptors.response.use(
   (res) => res,
   async (err) => {
@@ -32,7 +29,7 @@ instance.interceptors.response.use(
         localStorage.setItem("token", newAccessToken);
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
-        return instance(originalRequest); //  Retry original request
+        return instance(originalRequest);
       } catch (refreshError) {
         console.error(" Token refresh failed:", refreshError.message);
         logout();
@@ -41,7 +38,6 @@ instance.interceptors.response.use(
       }
     }
 
-    console.log("📡 API is running at:", API);
     return Promise.reject(err);
   }
 );

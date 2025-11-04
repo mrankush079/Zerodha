@@ -6,10 +6,10 @@ const RefreshTokenSchema = new mongoose.Schema({
   revoked: { type: Boolean, default: false },
   userAgent: { type: String },
   ip: { type: String },
-  createdAt: { type: Date, default: Date.now, expires: "7d" }, // ✅ TTL handled here
+  createdAt: { type: Date, default: Date.now, expires: "7d" }, //  TTL handled here
 });
 
-// ❌ Removed duplicate index definition
+//  Removed duplicate index definition
 
 const RefreshTokenModel = mongoose.model("RefreshToken", RefreshTokenSchema);
 module.exports = RefreshTokenModel;

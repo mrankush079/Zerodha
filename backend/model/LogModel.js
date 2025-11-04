@@ -8,7 +8,7 @@ const logSchema = new mongoose.Schema({
   qty: Number,
   message: String,
   time: { type: Date, default: Date.now },
-  archived: { type: Boolean, default: false }, // ✅ Soft delete flag
+  archived: { type: Boolean, default: false }, // Soft delete flag
 });
 
 module.exports = mongoose.model("Log", logSchema);
