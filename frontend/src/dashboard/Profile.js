@@ -59,7 +59,7 @@ const Profile = () => {
 
       <div className="profile-card">
         <img
-          src={user.avatar || "/media/images/ankush.jpg"}
+          src={ "/media/images/ankush.jpg"}
           alt={user.name || "User Avatar"}
           className="profile-avatar"
         />
