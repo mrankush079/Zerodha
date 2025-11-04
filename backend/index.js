@@ -13,8 +13,9 @@ const uri = process.env.MONGO_URI || "mongodb://localhost:27017/portfolio";
 //  Updated CORS origin support
 const allowedOrigins = [
   "http://localhost:3000", // Local dev
-
-  "zerodha-dc49.vercel.app", // ✅ Vercel domain #3
+  "https://zerodha-one-rosy.vercel.app", // ✅ Vercel domain #1
+  "https://zerodha-git-main-mrankush079s-projects.vercel.app", // ✅ Vercel domain #2
+  "https://zerodha-2wxloll3t-mrankush079s-projects.vercel.app", // ✅ Vercel domain #3
 ];
 
 
