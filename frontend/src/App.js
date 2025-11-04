@@ -19,7 +19,8 @@ import Logout from "./auth/Logout";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import AdminRoute from "./auth/AdminRoute";
 import Unauthorized from "./auth/Unauthorized";
-import ForgotPassword from "./auth/ForgotPassword"; // ✅ NEW
+import ForgotPassword from "./auth/ForgotPassword";
+import ResetPassword from "./auth/ResetPassword"; // ✅ Optional
 
 // Dashboard layout and views
 import Dashboard from "./dashboard/Dashboard";
@@ -60,7 +61,8 @@ function AppWrapper() {
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} /> {/* ✅ NEW */}
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} /> {/* ✅ Optional */}
 
         {/* Protected dashboard layout */}
         <Route
