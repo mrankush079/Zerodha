@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
 const Profile = () => {
   const [user, setUser] = useState({});
   const [editing, setEditing] = useState(false);
@@ -60,8 +59,8 @@ const Profile = () => {
 
       <div className="profile-card">
         <img
-          src={user.avatar || "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
-          alt="Avatar"
+          src={user.avatar || "/media/images/ankush.jpg"}
+          alt={user.name || "User Avatar"}
           className="profile-avatar"
         />
 
