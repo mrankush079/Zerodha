@@ -1,39 +1,37 @@
 import React from "react";
 
+
 function Pricing() {
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-4">
-          <h1 className="mb-3 fs-2">Unbeatable pricing</h1>
-          <p>
-            We pioneered the concept of discount broking and price transparency
-            in India. Flat fees and no hidden charges.
+    <section className="pricing-section container">
+      <div className="row align-items-center">
+        {/* Left Text Block */}
+        <div className="col-md-6 mb-4 mb-md-0">
+          <h2 className="pricing-title">Unbeatable pricing</h2>
+          <p className="pricing-description">
+            We pioneered the concept of discount broking and price transparency in India.
+            Flat fees and no hidden charges.
           </p>
-          <a href="" style={{ textDecoration: "none" }}>
-            See Pricing{" "}
-            <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+          <a href="#" className="pricing-link">
+            See Pricing <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
           </a>
         </div>
-        <div className="col-2"></div>
-        <div className="col-6  mb-5">
+
+        {/* Right Price Cards */}
+        <div className="col-md-6">
           <div className="row text-center">
-            <div className="col p-3 border">
-              <h1 className="mb-3">₹0</h1>
-              <p>
-                Free equity delivery and
-                <br />
-                direct mutual funds
-              </p>
+            <div className="col-6 p-3 pricing-card">
+              <h3 className="pricing-amount">₹0</h3>
+              <p>Free equity delivery and<br />direct mutual funds</p>
             </div>
-            <div className="col p-3 border">
-              <h1 className="mb-3">₹20</h1>
+            <div className="col-6 p-3 pricing-card">
+              <h3 className="pricing-amount">₹20</h3>
               <p>Intraday and F&O</p>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

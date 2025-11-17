@@ -1,27 +1,33 @@
+
 import React from "react";
+import "../../index.css";
 
 function Hero() {
   return (
-    <div className="container p-5 mb-5">
-      <div className="row text-center">
-        <img
-          src="media/images/homeHero.png"
-          alt="Hero Image"
-          className="mb-5"
-        />
-        <h1 className="mt-5">Invest in everything</h1>
-        <p>
-          Online platform to invest in stocks, derivatives, mutual funds, and
-          more
-        </p>
-        <button
-          className="p-2 btn btn-primary fs-5 mb-5"
-          style={{ width: "20%", margin: "0 auto" }}
-        >
-          Signup Now
-        </button>
+    <section className="hero-section">
+      <div className="hero-content container">
+        {/* image column */}
+        <div className="hero-visual text-center">
+          <img
+            src="media/images/homeHero.png"
+            alt="Hero"
+            className="hero-image"
+          />
+        </div>
+
+        {/* text column */}
+        <div className="hero-text">
+          <h1 className="hero-title">Invest in everything</h1>
+          <p className="hero-subtitle">
+            Online platform to invest in stocks, derivatives, mutual funds, and more
+          </p>
+
+          <div>
+            <button className="hero-button" type="button">Signup Now</button>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
 

@@ -2,14 +2,14 @@ import { Link } from "react-router-dom";
 
 
 const DashboardNavbar = () => (
-  <nav className="dashboard-navbar">
+  <nav className="dashboard-navbar" role="navigation" aria-label="Dashboard Navigation">
     <div className="navbar-brand">
       <img
         src="https://cdn.freelogovectors.net/wp-content/uploads/2021/12/zerodha-logo-freelogovectors.net_.png"
         alt="Zerodha Logo"
         className="navbar-logo"
       />
-      <span className="navbar-title"></span>
+      <span className="navbar-title">Dashboard</span>
     </div>
 
     <div className="navbar-links">
